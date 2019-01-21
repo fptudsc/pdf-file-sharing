@@ -1,0 +1,21 @@
+extends ../layouts/navbar
+
+block content
+    form
+        .form-row.align-items-center
+            .col-sm-3.my-1
+            label.sr-only(for='inlineFormInputName') Name
+            input#inlineFormInputName.form-control(type='text', placeholder='Jane Doe')
+            .col-sm-3.my-1
+            label.sr-only(for='inlineFormInputGroupUsername') Username
+            .input-group
+                .input-group-prepend
+                .input-group-text @
+                input#inlineFormInputGroupUsername.form-control(type='text', placeholder='Username')
+            .col-auto.my-1
+            .form-check
+                input#autoSizingCheck2.form-check-input(type='checkbox')
+                label.form-check-label(for='autoSizingCheck2')
+                | Remember me
+            .col-auto.my-1
+            button.btn.btn-primary(type='submit') Submit

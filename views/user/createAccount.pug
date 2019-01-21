@@ -1,0 +1,18 @@
+extends ../layouts/navbar
+
+block content
+    h1.jumbotron.text-center.display-2.p-5 NEW ACCOUNT
+    .container
+        .row
+            .col.col-4-lg
+            .col.col-4-lg
+                form.jumbotron(method='POST')
+                    .form-group
+                        label(for='username') Username
+                        input#username.form-control(type='text', name='username', placeholder='Enter username')
+                    .form-group
+                        label(for='password') Password
+                        input#password.form-control(type='password', name='password', placeholder='Enter password')
+                    .form-group.text-center
+                        button.btn.btn-primary.mb-2(type='submit') Register
+            .col.col-4-lg
