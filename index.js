@@ -27,6 +27,7 @@ app.get('/', (req, res) => {
 });
 
 app.use('/users', require('./routes/user.route'));
+app.use('/auth', require('./routes/auth.route'));
 
 const PORT = process.env.PORT;
 const server = app.listen(PORT, function () {

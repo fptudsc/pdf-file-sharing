@@ -11,11 +11,14 @@ const createAccount = (req, res) => {
 const register = async (req, res, next) => {
     const { username, password }  = req.body;
 
-    const newUser = new User({ username, password });
-    newUser.save((err, user) => {
+    const user = new User();
+    user.username = username;
+    user.setPassword(password);
+
+    user.save((err, user) => {
         if (err) return next(err);
         console.log('Saved :', user);
-        res.send(user);
+        res.redirect('/');
     });
 }
 
