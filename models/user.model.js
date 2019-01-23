@@ -6,16 +6,24 @@ const { Schema } = mongoose;
 const userSchema = new Schema({
     username: {
         type: String,
-        unique: true
+        unique: true,
+        required: true
     },
     saltPassword: {
         type: String,
-        alias: 'salt'
+        alias: 'salt',
+        required: true
     },
     hashPassword: {
         type: String,
-        alias: 'hash'
-    }
+        alias: 'hash',
+        required: true
+    },
+    roles: [{
+        type: String,
+        enum: ['user', 'admin'],
+        required: true
+    }]
 });
 
 userSchema.methods.setPassword = function (pwd) {

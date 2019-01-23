@@ -2,9 +2,8 @@ extends ../layouts/navbar
 
 block content
     .container
-        if errors
-            each err in errors
-                .alert.alert-warning #{err}
+        if error
+            .alert.alert-warning.text-center #{error.message}
         .row
             .col.col-4-lg
             .col.col-4-lg.text-center.jumbotron

@@ -1,34 +1,32 @@
 const User = require('mongoose').model('User');
+const passport = require('passport');
 
 const indexLogin = (req, res, next) => {
     res.render('auth/login');
 };
 
 const login = (req, res, next) => {
-    const { username, password} = req.body;
-    
-    User.findByUsername(username, (err, user) => {
-        const errors = [];
+    passport.authenticate('local-login', (err, user, info) => {
         if (err) return next(err);
-        if (!user) {
-            errors.push('Username not found');
-        }
+        if (!user) return res.render('auth/login', { error: { message: info['login-message'] }});
 
-        if (user && !user.validPassword(password)) {
-            errors.push('Password incorrect');
-        }
+        req.logIn(user, err => {
+            if (err) return next(err);
+            res.redirect('/');
+        });
+    })(req, res, next);
+};
 
-        if (errors.length) {
-            return res.render('auth/login', {
-                errors
-            });
-        }
-
+const logout = (req, res, next) => {
+    req.session.destroy(err => {
+        if (err) return next(err);
+        req.logout();
         res.redirect('/');
     });
 };
 
 module.exports = {
     indexLogin,
-    login
+    login,
+    logout
 }
