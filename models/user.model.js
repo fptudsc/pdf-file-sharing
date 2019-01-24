@@ -19,11 +19,13 @@ const userSchema = new Schema({
         alias: 'hash',
         required: true
     },
-    roles: [{
-        type: String,
-        enum: ['user', 'admin'],
+    roles: {
+        type: [{
+            type: String,
+            enum: ['reader', 'admin', 'writer', 'editor'],
+        }],
         required: true
-    }]
+    }
 });
 
 userSchema.methods.setPassword = function (pwd) {
@@ -39,6 +41,15 @@ userSchema.methods.validPassword = function (pwd) {
 
 userSchema.statics.findByUsername = function (username, cb) {
     this.findOne({ username }, cb);
+};
+
+userSchema.pre('save', function(next) {
+    this.roles.push('reader');
+    next();
+});
+
+userSchema.static.getRolesByUserId = function (id, cb) {
+    this.findById(id).select('roles').exec(cb);
 };
 
 mongoose.model('User', userSchema);
