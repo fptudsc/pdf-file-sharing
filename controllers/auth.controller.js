@@ -25,8 +25,28 @@ const logout = (req, res, next) => {
     });
 };
 
+const register = (req, res) => {
+    res.render('user/createAccount');
+};
+
+const postRegister = async (req, res, next) => {
+    const { username, password }  = req.body;
+
+    const user = new User();
+    user.username = username;
+    user.setPassword(password);
+
+    user.save((err, user) => {
+        if (err) return next(err);
+        console.log('Saved :', user);
+        res.redirect('/');
+    });
+}
+
 module.exports = {
     indexLogin,
     login,
-    logout
+    logout,
+    register,
+    postRegister
 }
