@@ -8,11 +8,20 @@ block content
             .col.col-4-lg
                 form.jumbotron(method='POST')
                     .form-group
+                        if errors.username
+                            .alert.alert-danger.text-center #{errors.username}
                         label(for='username') Username
-                        input#username.form-control(type='text', name='username', placeholder='Enter username')
+                        input#username.form-control(type='text', name='username', placeholder='Enter username', value=user.username || '')
                     .form-group
+                        if errors.password
+                            .alert.alert-danger.text-center #{errors.password}
                         label(for='password') Password
-                        input#password.form-control(type='password', name='password', placeholder='Enter password')
+                        input#password.form-control(type='password', name='password', placeholder='Enter password', value=user.password || '')
+                    .form-group
+                        if errors.passwordPair
+                            .alert.alert-danger.text-center #{errors.passwordPair}
+                        label(for='passwordPair') Password
+                        input#passwordPair.form-control(type='password', name='passwordPair', placeholder='Enter password', value=user.passwordPair || '')
                     .form-group.text-center
                         button.btn.btn-primary.mb-2(type='submit') Register
             .col.col-4-lg

@@ -26,7 +26,13 @@ const logout = (req, res, next) => {
 };
 
 const register = (req, res) => {
-    res.render('user/createAccount');
+    const errors = req.flash('errors-validate')[0] || {}; // validate failed
+    const user = req.flash('user-inputs')[0] || {};
+
+    res.render('user/createAccount', {
+        user,
+        errors
+    });
 };
 
 const postRegister = async (req, res, next) => {

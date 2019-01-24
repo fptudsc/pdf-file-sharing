@@ -2,10 +2,11 @@ const express = require('express');
 const router = express.Router();
 
 const controller = require('../controllers/auth.controller');
+const validator = require('../validators/user.validate');
 
 router.get('/register', controller.register);
 
-router.post('/register', controller.postRegister);
+router.post('/register', validator.validate, controller.postRegister);
 
 router.get('/login', controller.indexLogin);
 
