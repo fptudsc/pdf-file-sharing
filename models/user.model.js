@@ -48,7 +48,7 @@ userSchema.pre('save', function(next) {
     next();
 });
 
-userSchema.static.getRolesByUserId = function (id, cb) {
+userSchema.statics.getRolesByUserId = function (id, cb) {
     this.findById(id).select('roles').exec(cb);
 };
 

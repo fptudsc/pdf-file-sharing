@@ -7,12 +7,17 @@ const indexLogin = (req, res, next) => {
 
 const login = (req, res, next) => {
     passport.authenticate('local-login', (err, user, info) => {
+        // get the current-request-url from auth middleware
+        // if non-exist, set default '/'
+        const currentUrl = req.flash('current-request-url')[0] || '/';
+
         if (err) return next(err);
         if (!user) return res.render('auth/login', { error: { message: info['login-message'] }});
 
         req.logIn(user, err => {
             if (err) return next(err);
-            res.redirect('/');
+            // redirect user back to the url required
+            res.redirect(currentUrl);
         });
     })(req, res, next);
 };
