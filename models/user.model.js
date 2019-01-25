@@ -22,7 +22,7 @@ const userSchema = new Schema({
     roles: {
         type: [{
             type: String,
-            enum: ['reader', 'admin', 'writer', 'editor'],
+            enum: [ 'reader', 'admin', 'uploader', 'editor' ],
         }],
         required: true
     }

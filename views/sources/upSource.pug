@@ -1,0 +1,22 @@
+extends ../layouts/navbar
+
+block content
+    h1.jumbotron.text-center Sources Upload
+    .container
+        .row
+            .col.col-4-lg
+            .col.col-4-lg
+                form.jumbotron(method='POST', enctype='multipart/form-data')
+                    .form-group
+                        if errors.title
+                            .alert.alert-danger.text-center #{errors.title}
+                        label(for='title') Title
+                        input#title.form-control(type='text', name='title', placeholder='Enter title', value=source.title || '')
+                    .form-group
+                        if errors.title
+                                .alert.alert-danger.text-center #{errors.title}
+                        label(for='title') Username
+                        input#title.form-control(type='text', name='title', placeholder='Enter title', value=source.title || '')
+                    .form-group.text-center
+                        button.btn.btn-primary.mb-2(type='submit') Register
+            .col.col-4-lg

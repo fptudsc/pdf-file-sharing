@@ -15,7 +15,8 @@ const app = express();
 require('./models/user.model');
 
 const userRoute = require('./routes/user.route'),
-    authRoute = require('./routes/auth.route');
+    authRoute = require('./routes/auth.route'),
+    sourceRoute = require('./routes/source.route');
 
 const auth = require('./middlewares/auth.middleware');
 
@@ -48,6 +49,7 @@ app.get('/', (req, res) => {
 
 app.use('/users', auth.requireAuth, userRoute);
 app.use('/auth', authRoute);
+app.use('/sources', sourceRoute);
 
 const PORT = process.env.PORT;
 const server = app.listen(PORT, function () {
