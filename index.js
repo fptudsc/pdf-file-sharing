@@ -20,7 +20,8 @@ const userRoute = require('./routes/user.route'),
     authRoute = require('./routes/auth.route'),
     sourceRoute = require('./routes/source.route');
 
-const auth = require('./middlewares/auth.middleware');
+const auth = require('./middlewares/auth.middleware'),
+    requrestMiddleware = require('./middlewares/request.middleware');
 
 mongoose.connect(process.env.MONGO_URL, { useNewUrlParser: true },  function (err) {
     if (err) return console.error(err);
@@ -47,6 +48,9 @@ app.use(flash());
 app.set('view engine', 'pug');
 app.set('views', path.join(__dirname, '/views'));
 
+// Wire request 'pre' actions
+app.use(requrestMiddleware.wirePostRequest);
+
 app.get('/', (req, res) => {
     res.render('index');
 });
@@ -54,6 +58,13 @@ app.get('/', (req, res) => {
 app.use('/users', auth.requireAuth, userRoute);
 app.use('/auth', authRoute);
 app.use('/sources', sourceRoute);
+
+// Since not found any middleware
+app.use(requrestMiddleware.notFoundMiddleware);
+
+// Wire request 'post' actions
+// any error
+app.use(requrestMiddleware.wirePostRequest);
 
 const PORT = process.env.PORT;
 const server = app.listen(PORT, function () {

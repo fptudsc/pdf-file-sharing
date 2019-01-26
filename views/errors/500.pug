@@ -1,0 +1,7 @@
+extends ../layouts/navbar
+
+block content
+    h1.container.jumbotron.text-danger.text-center.display-2.p-0 ERROR 505
+    .jumbotron
+        h2.text-success #{error.message}
+        pre #{error.stack}
