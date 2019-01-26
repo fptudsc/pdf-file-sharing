@@ -13,10 +13,15 @@ block content
                         label(for='title') Title
                         input#title.form-control(type='text', name='title', placeholder='Enter title', value=source.title || '')
                     .form-group
-                        if errors.title
-                                .alert.alert-danger.text-center #{errors.title}
-                        label(for='title') Username
-                        input#title.form-control(type='text', name='title', placeholder='Enter title', value=source.title || '')
+                        if errors.description
+                                .alert.alert-danger.text-center #{errors.description}
+                        label(for='description') Description
+                        input#description.form-control(type='text', name='description', placeholder='Enter description', value=source.description || '')
+                    .form-group
+                        if errors.file
+                                .alert.alert-danger.text-center #{errors.file}
+                        label(for='file') Description
+                        input#file.form-control(type='file', name='file_upload')
                     .form-group.text-center
-                        button.btn.btn-primary.mb-2(type='submit') Register
+                        button.btn.btn-primary.mb-2(type='submit') Upload
             .col.col-4-lg

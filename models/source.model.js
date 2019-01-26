@@ -12,9 +12,13 @@ const sourceSchema = new Schema({
         required: true
     },
     file_data: {
-        type: Buffer,
+        type: Schema.Types.Mixed,
         required: true
     },
+    description: {
+        type: String,
+        required: true
+    },    
     author: {
         type: Schema.Types.ObjectId,
         ref: 'User'

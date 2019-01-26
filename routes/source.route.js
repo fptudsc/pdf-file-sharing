@@ -1,5 +1,7 @@
 const express = require('express');
 const router = express.Router();
+const multipart = require('connect-multiparty');
+const multipartMiddleware = multipart();
 
 const controller = require('../controllers/source.controller');
 
@@ -20,6 +22,7 @@ router.post(
     '/upSource',
     auth.requireAuth,
     auth.requireRole([ 'uploader', 'admin' ]),
+    multipartMiddleware,
     controller.postUpSource
 );
 

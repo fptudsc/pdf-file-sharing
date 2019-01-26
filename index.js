@@ -7,12 +7,14 @@ const express = require('express'),
     morgan = require('morgan'),
     passport = require('passport'),
     session = require('express-session'),
-    flash = require('connect-flash');
+    flash = require('connect-flash'),
+    cloudinary = require('cloudinary').v2;
 
 const app = express();
 
 // require model
 require('./models/user.model');
+require('./models/source.model');
 
 const userRoute = require('./routes/user.route'),
     authRoute = require('./routes/auth.route'),
@@ -34,7 +36,9 @@ app.use(session({
     resave: false,
     saveUninitialized: false
 }));
+app.use('/node_modules', express.static(path.join(__dirname, '/node_modules')));
 
+require('./config/cloudinary.config')(cloudinary);
 require('./config/passport.config')(passport);
 app.use(passport.initialize());
 app.use(passport.session());
@@ -54,4 +58,5 @@ app.use('/sources', sourceRoute);
 const PORT = process.env.PORT;
 const server = app.listen(PORT, function () {
     console.log(`Server is now running on http://localhost:${server.address().port}`);
+    console.log('='.repeat(100));
 });
