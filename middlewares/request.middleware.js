@@ -1,4 +1,8 @@
+const debug = require('debug')('request');
+const cloudinary = require('cloudinary');
+
 const wirePreRequest = (req, res, next) => {
+    debug(req.method + ' ' + req.url);
     if (typeof(process.env.CLOUDINARY_URL)=='undefined'){
         throw new Error('Missing CLOUDINARY_URL environment variable')
     }else{
@@ -14,14 +18,14 @@ const wirePostRequest = (err, req, res, next) => {
     if (err === 'Must supply api_key') {
         res.status(500).render('errors/dotenv');
     } else {
-        console.log('ERROR :{} 500 ' + err.message);
-        console.log(err.stack);
+        debug('ERROR :{} 500 ' + err.message);
+        debug(err.stack);
         res.status(500).render('errors/500', { error: err});
     }
 }
 
 const notFoundMiddleware = (req, res, next) => {
-    console.log('ERROR :{} 404');
+    debug('ERROR :{} 404');
     res.status(404).render('errors/404', {
         err: 'Not found',
         url: req.url

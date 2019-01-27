@@ -1,5 +1,6 @@
 const Source = require('mongoose').model('Source');
 const cloudinary = require('cloudinary').v2;
+const debug = require('debug')('cloudinary');
 
 const index = (req, res, next) => {
     res.render('sources/index');
@@ -35,16 +36,16 @@ const postUpSource = (req, res, next) => {
     // Upload file to Cloudinary
     cloudinary.uploader.upload(filePath, {tags: 'sources_sharing'})
         .then(function (file_data) {
-            console.log('** file_data uploaded to Cloudinary service');
-            console.dir(file_data);
+            debug('** file_data uploaded to Cloudinary service');
+            debug(file_data);
             source.file_data = file_data;
             // Save source with file_data metadata
             return source.save();
         })
         .then(function (photo) {
-            console.log('** source saved')
+            debug('** source saved');
         })
-        .catch(err => console.log(err))
+        .catch(err => next(err))
         .finally(function () {
             res.redirect('/sources');        
         });

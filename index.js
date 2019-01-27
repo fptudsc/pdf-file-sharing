@@ -8,6 +8,7 @@ dotenvExpand(myEnv);
 const express = require('express'),
     bodyParser = require('body-parser'),
     path = require('path'),
+    debug = require('debug')('SERVER'),
     morgan = require('morgan'),
     passport = require('passport'),
     session = require('express-session'),
@@ -51,7 +52,7 @@ app.set('view engine', 'pug');
 app.set('views', path.join(__dirname, '/views'));
 
 // Wire request 'pre' actions
-app.use(requrestMiddleware.wirePostRequest);
+app.use(requrestMiddleware.wirePreRequest);
 
 app.get('/', (req, res) => {
     res.render('index');
@@ -70,6 +71,6 @@ app.use(requrestMiddleware.wirePostRequest);
 
 const PORT = process.env.PORT;
 const server = app.listen(PORT, function () {
-    console.log(`Server is now running on http://localhost:${server.address().port}`);
-    console.log('='.repeat(100));
+    debug(`Server is now running on http://localhost:${server.address().port}`);
+    debug('='.repeat(100));
 });

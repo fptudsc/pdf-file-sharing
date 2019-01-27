@@ -1,9 +1,11 @@
+const debug = require('debug')('cloudinary');
+
 module.exports = cloudinary => {
     if (typeof(process.env.CLOUDINARY_URL)=='undefined'){
-      console.warn('!! cloudinary config is undefined !!');
-      console.warn('export CLOUDINARY_URL or set dotenv file')
+      debug('!! cloudinary config is undefined !!');
+      debug('export CLOUDINARY_URL or set dotenv file');
     }else{
-      console.log('CLOUDINARY CONFIG :');
-      console.log(cloudinary.config())
+      debug('CLOUDINARY CONFIG :');
+      debug(cloudinary.config());
     }
 }

@@ -49,7 +49,6 @@ const postRegister = async (req, res, next) => {
 
     user.save((err, user) => {
         if (err) return next(err);
-        console.log('Saved :', user);
         res.redirect('/');
     });
 }

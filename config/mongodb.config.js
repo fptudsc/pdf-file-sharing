@@ -1,4 +1,5 @@
 const mongoose = require('mongoose');
+const debug = require('debug')('mongoose');
 
 const options = {
     useNewUrlParser: true,
@@ -8,12 +9,13 @@ const options = {
 };
 
 const connect = (url) => {
+    debug('Connecting to MongoDB');
     mongoose.connect(url, options)
         .then(() => {
-            console.log('Connected to MongoDB');
+            debug('Connected');
         })
         .catch(err => {
-            console.err(err);
+            debug(err);
         });
 };
 

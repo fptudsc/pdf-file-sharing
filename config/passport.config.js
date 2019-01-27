@@ -1,5 +1,6 @@
 const User = require('mongoose').model('User');
 const { Strategy: LocalStrategy} = require('passport-local');
+const debug = require('debug')('passport');
 
 const localOptions = {
     usernameField: 'username',
@@ -8,6 +9,7 @@ const localOptions = {
 };
 
 const localStrategyLogin = new LocalStrategy(localOptions, (req, username, password, done) => {
+        debug('User logining');
         User.findByUsername(username, (err, user) => {
             if (err) return done(err);
             if (!user)
@@ -21,6 +23,7 @@ const localStrategyLogin = new LocalStrategy(localOptions, (req, username, passw
 
 const configPassport = passport => {
     passport.serializeUser((user, done) => {
+        debug(`Serialize user : { user.id: ${user.id}}`);
         done(null, user.id);
     });
 
@@ -32,7 +35,8 @@ const configPassport = passport => {
                 id: user.id,
                 username: user.username,
             };
-
+            
+            debug('Deserialize user :', userAuth);
             done(null, userAuth);
         });
     });

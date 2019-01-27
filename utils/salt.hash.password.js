@@ -1,4 +1,5 @@
 const crypto = require('crypto');
+const debug = require('debug')('password-util');
 
 const getRandomString = length => {
     return crypto.randomBytes(Math.ceil(length / 2))
@@ -19,10 +20,10 @@ const sha512 = (password, salt) => {
 const saltHashPassword = userpassword => {
     const salt = getRandomString(16);
     const passwordData = sha512(userpassword, salt);
-    console.log(new Date, 'Salt{}Hash{}Password');
-    console.log(`UserPassword : ${userpassword}`);
-    console.log(`Salt : ${passwordData.salt}`);
-    console.log(`HashPassword : ${passwordData.hashPassword}`);
+    debug('Salt{}Hash{}Password');
+    debug('UserPassword :', userpassword);
+    debug('Salt :', passwordData.salt);
+    debug('Hash :', passwordData.hashPassword);
     return passwordData;
 };
 

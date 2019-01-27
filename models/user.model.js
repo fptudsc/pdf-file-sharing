@@ -32,7 +32,6 @@ userSchema.methods.setPassword = function (pwd) {
     const pwdCrypto = saltHashPassword(pwd);
     this.salt = pwdCrypto.salt;
     this.hash = pwdCrypto.hashPassword;
-    console.log(this);
 };
 
 userSchema.methods.validPassword = function (pwd) {
