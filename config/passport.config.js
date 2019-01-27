@@ -34,6 +34,8 @@ const configPassport = passport => {
             const userAuth = {
                 id: user.id,
                 username: user.username,
+                firstName: user.firstName,
+                lastName: user.lastName
             };
             
             debug('Deserialize user :', userAuth);

@@ -19,6 +19,16 @@ const userSchema = new Schema({
         alias: 'hash',
         required: true
     },
+    firstName: {
+        type: String,
+        required: true,
+        trim: true
+    },
+    lastName: {
+        type: String,
+        required: true,
+        trim: true
+    },
     roles: {
         type: [{
             type: String,

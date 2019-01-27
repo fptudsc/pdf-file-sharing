@@ -3,6 +3,12 @@ const validator = require('validator');
 module.exports.validate = (req, res, next) => {
     const user = req.body;
     const errors = {};
+    if (validator.isEmpty(user.firstName))
+        errors.firstName = 'Please enter First Name';
+
+    if (validator.isEmpty(user.lastName))
+        errors.lastName = 'Please enter Last Name';
+
     if (validator.isEmpty(user.username))
         errors.username = 'Please enter Username';
     

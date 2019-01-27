@@ -1,8 +1,6 @@
 html
     head
         link(href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css", rel="stylesheet")
-        script(src='/node_modules/jquery/dist/jquery.min.js', lang='text/javascript')
-        script(src='/node_modules/cloudinary-jquery-file-upload/cloudinary-jquery-file-upload.js', type='text/javascript')
     body
         nav.navbar.navbar-light.bg-light.navbar-expand-lg
             #navbarNavAltMarkup.navbar-collapse
@@ -12,10 +10,12 @@ html
                         span.sr-only (current)
                     a.nav-item.nav-link(href='/sources') Sources
                     a.nav-item.nav-link(href='/') Admin
-                    a.nav-item.nav-link(href='/auth/login') Login
-                    a.nav-item.nav-link(href='/auth/register') Signup
+                    
             form.form-inline
-                input.form-control.mr-sm-2(type='search', placeholder='Search', aria-label='Search')
-                button.btn.btn-outline-success.my-2.my-sm-0(type='submit') Search
-        
+                if userLogin
+                    .btn.btn-success=userLogin.firstName + ' ' + userLogin.lastName
+                    a.btn.btn-danger(href='/auth/logout') Logout
+                else
+                    a.btn.btn-info(href='/auth/login') Login
+                    a.btn.btn-warning(href='/auth/register') Signup
         block content

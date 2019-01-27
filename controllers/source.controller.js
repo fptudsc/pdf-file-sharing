@@ -3,7 +3,9 @@ const cloudinary = require('cloudinary').v2;
 const debug = require('debug')('cloudinary');
 
 const index = (req, res, next) => {
-    res.render('sources/index');
+    Source.find({}, (err, sources) => {
+        res.render('sources/index', { sources });
+    });
 };
 
 const upSource = (req, res, next) => {

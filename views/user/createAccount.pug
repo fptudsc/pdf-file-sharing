@@ -8,6 +8,16 @@ block content
             .col.col-4-lg
                 form.jumbotron(method='POST')
                     .form-group
+                        if errors.firstName
+                            .alert.alert-danger.text-center #{errors.firstName}
+                        label(for='firstName') First Name
+                        input#firstName.form-control(type='text', name='firstName', placeholder='Enter First Name', value=user.firstName || '')
+                    .form-group
+                        if errors.lastName
+                            .alert.alert-danger.text-center #{errors.lastName}
+                        label(for='lastName') Last Name
+                        input#lastName.form-control(type='text', name='lastName', placeholder='Enter Last Name', value=user.lastName || '')
+                    .form-group
                         if errors.username
                             .alert.alert-danger.text-center #{errors.username}
                         label(for='username') Username

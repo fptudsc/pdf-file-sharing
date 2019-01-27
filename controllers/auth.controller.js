@@ -41,10 +41,13 @@ const register = (req, res) => {
 };
 
 const postRegister = async (req, res, next) => {
-    const { username, password }  = req.body;
+    const { firstName, lastName, username, password }  = req.body;
 
     const user = new User();
+    user.firstName = firstName;
+    user.lastName = lastName;
     user.username = username;
+    // salt, hash will be saved instead plainTextPassword
     user.setPassword(password);
 
     user.save((err, user) => {

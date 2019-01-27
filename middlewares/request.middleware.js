@@ -8,6 +8,12 @@ const wirePreRequest = (req, res, next) => {
     }else{
         // Expose cloudinary package to view
         res.locals.cloudinary = cloudinary;
+        if (req.user){
+            res.locals.userLogin = {
+                firstName: req.user.firstName,
+                lastName: req.user.lastName
+            };
+        }
         next();
     }
 };
