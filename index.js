@@ -1,7 +1,11 @@
-require('dotenv').config();
+const dotenv = require('dotenv');
+const dotenvExpand = require('dotenv-expand');
+// configure environment variables
+const myEnv = dotenv.config();
+// expand existing env variables
+dotenvExpand(myEnv);
 
 const express = require('express'),
-    mongoose = require('mongoose'),
     bodyParser = require('body-parser'),
     path = require('path'),
     morgan = require('morgan'),
@@ -23,11 +27,6 @@ const userRoute = require('./routes/user.route'),
 const auth = require('./middlewares/auth.middleware'),
     requrestMiddleware = require('./middlewares/request.middleware');
 
-mongoose.connect(process.env.MONGO_URL, { useNewUrlParser: true },  function (err) {
-    if (err) return console.error(err);
-    console.log('Connected to MongoDB');
-});
-
 app.use(morgan('dev'));
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
@@ -39,6 +38,9 @@ app.use(session({
 }));
 app.use('/node_modules', express.static(path.join(__dirname, '/node_modules')));
 
+// connect to mlab cloud database
+require('./config/mongodb.config').connectToMlab();
+// configure cloudinary to upload file
 require('./config/cloudinary.config')(cloudinary);
 require('./config/passport.config')(passport);
 app.use(passport.initialize());
