@@ -49,7 +49,12 @@ const postRegister = async (req, res, next) => {
 
     user.save((err, user) => {
         if (err) return next(err);
-        res.redirect('/');
+
+        // login after saving user
+        req.logIn(user, err => {
+            if (err) return next(err);
+            res.redirect('/');
+        })
     });
 }
 
