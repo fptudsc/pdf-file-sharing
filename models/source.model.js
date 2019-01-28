@@ -31,7 +31,7 @@ const sourceSchema = new Schema({
 
 sourceSchema.statics.findSourcesByUserId = function (user_id, cb) {
     this.find({ author: new ObjectId(user_id)})
-        .select('title file_name file_data.public_id description')
+        .select('title file_name file_data.secure_url description')
         .exec(cb);
 };
 

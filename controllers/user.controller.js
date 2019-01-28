@@ -4,6 +4,11 @@ const viewProfile = async (req, res) => {
 
 };
 
+const viewOwnSources = (req, res) => {
+    res.render('sources/index');
+};
+
 module.exports = {
-    viewProfile
+    viewProfile,
+    viewOwnSources
 };

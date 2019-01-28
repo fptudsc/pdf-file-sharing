@@ -1,6 +1,8 @@
 html
     head
         link(href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css", rel="stylesheet")
+        script(src='/js/getCookie.js')
+        script(src='/js/sendRequest.js')
     body
         nav.navbar.navbar-light.bg-light.navbar-expand-lg
             #navbarNavAltMarkup.navbar-collapse
@@ -9,6 +11,8 @@ html
                         | Home 
                         span.sr-only (current)
                     a.nav-item.nav-link(href='/sources') Sources
+                    if userLogin
+                        a.nav-item.nav-link(href='/users/viewOwnSources') My_Sources
                     a.nav-item.nav-link(href='/') Admin
                     
             form.form-inline
