@@ -23,10 +23,6 @@ const upSource = (req, res, next) => {
 };
 
 const postUpSource = (req, res, next) => {
-     // file was not uploaded redirecting to upload 
-    if (req.files.file_upload.size == 0)
-        return res.redirect('/sources/upSource');
-
     const source = new Source();
     source.author = req.user.id;
     source.file_name = req.files.file_upload.originalFilename;

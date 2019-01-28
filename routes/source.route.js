@@ -7,6 +7,7 @@ const controller = require('../controllers/source.controller');
 
 // auth middleware to require auth and role
 const auth = require('../middlewares/auth.middleware');
+const validator = require('../validators/source.validate');
 
 router.get('/', controller.index);
 
@@ -23,6 +24,7 @@ router.post(
     auth.requireAuth,
     auth.requireRole([ 'uploader', 'admin' ]),
     multipartMiddleware,
+    validator.validate,
     controller.postUpSource
 );
 
