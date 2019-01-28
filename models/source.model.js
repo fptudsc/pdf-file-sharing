@@ -1,5 +1,6 @@
 const mongoose = require('mongoose');
 const { Schema } = mongoose;
+const ObjectId = mongoose.Types.ObjectId;
 
 const sourceSchema = new Schema({
     title: {
@@ -27,5 +28,11 @@ const sourceSchema = new Schema({
     // uploadAt, createAt
     timestamps: true
 });
+
+sourceSchema.statics.findSourcesByUserId = function (user_id, cb) {
+    this.find({ author: new ObjectId(user_id)})
+        .select('title file_name file_data.public_id description')
+        .exec(cb);
+};
 
 module.exports = mongoose.model("Source", sourceSchema);

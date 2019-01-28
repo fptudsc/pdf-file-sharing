@@ -58,6 +58,9 @@ app.get('/', (req, res) => {
     res.render('index');
 });
 
+// using api
+app.use('/api', require('./api'));
+
 app.use('/users', auth.requireAuth, userRoute);
 app.use('/auth', authRoute);
 app.use('/sources', sourceRoute);
