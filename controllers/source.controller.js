@@ -66,9 +66,19 @@ const viewSource = (req, res, next) => {
 
 const deleteSource = (req, res, next) => {
     const source_id = req.params.id;
-    Source.findById(source_id).remove().exec(err => {
+    Source.findById(source_id).exec((err, source) => {
         if (err) return next(err);
-        res.redirect('/users/viewOwnSources');
+        // remove on cloud
+        cloudinary.uploader
+            .destroy(source.file_data.public_id, (err, result) => {
+                if (err) return next(err);
+                debug('Delete file on cloudinary :', result);
+            });
+        // remove on db
+        Source.deleteOne(source, err => {
+            if (err) return next(err);
+            res.redirect('/users/viewOwnSources');
+        });
     });
 }
 
