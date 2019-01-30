@@ -34,7 +34,7 @@ const register = (req, res) => {
     const errors = req.flash('errors-validate')[0] || {}; // validate failed
     const user = req.flash('user-inputs')[0] || {};
 
-    res.render('user/createAccount', {
+    res.render('users/createAccount', {
         user,
         errors
     });

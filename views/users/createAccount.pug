@@ -32,6 +32,11 @@ block content
                             .alert.alert-danger.text-center #{errors.passwordPair}
                         label(for='passwordPair') Password
                         input#passwordPair.form-control(type='password', name='passwordPair', placeholder='Enter password', value=user.passwordPair || '')
+                    .form-group
+                        if errors.email
+                            .alert.alert-danger.text-center #{errors.email}
+                        label(for='email') Email
+                        input#email.form-control(type='text', name='email', placeholder='Enter email', value=user.email || '')
                     .form-group.text-center
                         button.btn.btn-primary.mb-2(type='submit') Register
             .col.col-4-lg

@@ -1,0 +1,28 @@
+extends ../layouts/navbar
+
+block content
+    h1.jumbotron.text-center.p-0.result
+        .display-2 PROFILE
+    .container-fluid.row
+        .col.col-4-lg
+        .col.col-4-lg
+            a(href='/users/changePassword').btn.btn-info Change password
+            form.jumbotron(method='POST', name="form_profile")
+                .form-group
+                    label(for='firstName') First Name
+                    input#firstName.form-control(type='text', name='firstName', placeholder='Enter First Name', value=profile.firstName || '')
+                .form-group
+                    label(for='lastName') Last Name
+                    input#lastName.form-control(type='text', name='lastName', placeholder='Enter Last Name', value=profile.lastName || '')
+                .form-group
+                    label(for='username') Username
+                    input#username.form-control(type='text', name='username', placeholder='Enter username', value=profile.username || '')
+                .form-group
+                    label(for='email') Email
+                    input#email.form-control(type='email', name='email', placeholder='Enter email', value=profile.email || '')
+                .form-group.text-center
+                    input#password.alert.alert-warning.form-control(type='password', name='password', placeholder='Enter password', value=profile.password || '')
+                    button.btn.btn-primary.mb-2(type='submit') Save change
+        .col.col-4-lg
+
+        script(src='/js/profile.js')
