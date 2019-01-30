@@ -53,7 +53,8 @@ userSchema.statics.findByUsername = function (username, cb) {
 };
 
 userSchema.pre('save', function(next) {
-    this.roles.push('reader');
+    if (!this.roles.includes('reader'))
+        this.roles.push('reader');
     next();
 });
 

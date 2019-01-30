@@ -1,0 +1,7 @@
+extends ../layouts/navbar
+
+block content
+    h1.jumbotron.text-center=source.title
+    .container
+        iframe(src=cloudinary.url(source.url), width='100%', height='700')
+    h1.jumbotron.text-center.m-4=source.title

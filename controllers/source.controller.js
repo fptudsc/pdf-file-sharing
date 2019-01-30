@@ -45,12 +45,37 @@ const postUpSource = (req, res, next) => {
         })
         .catch(err => next(err))
         .finally(function () {
-            res.redirect('/sources');        
+            res.redirect('/users/viewOwnSources');        
         });
 };
+
+const viewSource = (req, res, next) => {
+    const source_id = req.params.id;
+    Source.findById(source_id, (err, source) => {
+        if (err) return next(err);
+
+        const result = {
+            title: source.title,
+            description: source.description,
+            url: source.file_data.public_id
+        };
+
+        res.render('sources/view', { source: result });
+    });
+}
+
+const deleteSource = (req, res, next) => {
+    const source_id = req.params.id;
+    Source.findById(source_id).remove().exec(err => {
+        if (err) return next(err);
+        res.redirect('/users/viewOwnSources');
+    });
+}
 
 module.exports = {
     index,
     upSource,
-    postUpSource
+    postUpSource,
+    viewSource,
+    deleteSource
 }

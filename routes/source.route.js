@@ -30,4 +30,8 @@ router.post(
 
 router.post('/upSource', controller.postUpSource);
 
+router.get('/view/:id', controller.viewSource);
+
+router.get('/delete/:id', controller.deleteSource);
+
 module.exports = router;

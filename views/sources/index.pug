@@ -10,6 +10,8 @@ block content
                 .col.col-lg-4.text-center.bg-light.m-2.p-4
                     h1=s.title
                     iframe(src=cloudinary.url(s.file_data.public_id), width='400', height='400')
+                    br
+                    a.btn.btn-info(href='/sources/view/' + s.id) View
         else
             .container-fluid.jumbotron.text-center
                 h1.display-1 Loading ....

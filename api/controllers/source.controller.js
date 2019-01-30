@@ -6,6 +6,7 @@ const findMyOwnSource = (req, res, next) => {
         const results = [];
         for (let i = 0; i < sources.length; i++) {
             results.push({
+                id: sources[i].id,
                 title: sources[i].title,
                 description: sources[i].description,
                 url: sources[i].file_data.secure_url,

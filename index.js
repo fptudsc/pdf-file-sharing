@@ -62,7 +62,7 @@ app.get('/', (req, res) => {
 });
 
 // using api
-app.use('/api', require('./api'));
+app.use('/api', auth.requireAuth, require('./api'));
 
 app.use('/users', auth.requireAuth, userRoute);
 app.use('/auth', authRoute);
