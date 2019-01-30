@@ -14,4 +14,8 @@ router.post('/login', controller.login);
 
 router.get('/logout', controller.logout);
 
+router.get('/facebook', controller.loginFacebook);
+
+router.get('/facebook/callback', controller.callbackFacebook);
+
 module.exports = router;

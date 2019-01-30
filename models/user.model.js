@@ -7,26 +7,21 @@ const userSchema = new Schema({
     username: {
         type: String,
         unique: true,
-        required: true
     },
     saltPassword: {
         type: String,
         alias: 'salt',
-        required: true
     },
     hashPassword: {
         type: String,
         alias: 'hash',
-        required: true
     },
     firstName: {
         type: String,
-        required: true,
         trim: true
     },
     lastName: {
         type: String,
-        required: true,
         trim: true
     },
     roles: {
@@ -35,6 +30,11 @@ const userSchema = new Schema({
             enum: [ 'reader', 'admin', 'uploader', 'editor' ],
         }],
         required: true
+    },
+    profile_picture: String,
+    email: String,
+    social: {
+        type: Schema.Types.Mixed
     }
 });
 

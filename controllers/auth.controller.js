@@ -61,10 +61,26 @@ const postRegister = async (req, res, next) => {
     });
 }
 
+const loginFacebook = (req, res, next) => {
+    passport.authenticate(
+        'facebook-login',
+        { scope: [ 'email', 'public_profile', 'user_location' ] }
+    )(req, res, next);
+}
+
+const callbackFacebook = (req, res, next) => {
+    passport.authenticate('facebook-login', {
+        failureRedirect: '/auth/login',
+        successRedirect: '/'
+    })(req, res, next);
+}
+
 module.exports = {
     indexLogin,
     login,
     logout,
     register,
-    postRegister
+    postRegister,
+    loginFacebook,
+    callbackFacebook
 }

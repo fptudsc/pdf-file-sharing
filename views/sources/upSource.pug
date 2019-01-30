@@ -20,7 +20,7 @@ block content
                     .form-group
                         if errors.file_upload
                                 .alert.alert-danger.text-center #{errors.file_upload}
-                        label(for='file') Description
+                        label(for='file') Source
                         input#file.form-control(type='file', name='file_upload', accept='application/pdf')
                     .form-group.text-center
                         button.btn.btn-primary.mb-2(type='submit') Upload

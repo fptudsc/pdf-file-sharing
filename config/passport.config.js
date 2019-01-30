@@ -1,10 +1,23 @@
 const User = require('mongoose').model('User');
-const { Strategy: LocalStrategy} = require('passport-local');
+const { Strategy: LocalStrategy } = require('passport-local');
+const { Strategy: FacebookStrategy } = require('passport-facebook');
+const auth = require('./auth');
+
 const debug = require('debug')('passport');
+
+const socialService = require('../services/social.service');
 
 const localOptions = {
     usernameField: 'username',
     passwordField: 'password',
+    passReqToCallback: true
+};
+
+const facebookOptions = {
+    clientID: auth.facebook.app_id,
+    clientSecret: auth.facebook.app_secret,
+    callbackURL: auth.facebook.callback,
+    profileFields: [ 'id', 'displayName', 'photos', 'email', 'name' ],
     passReqToCallback: true
 };
 
@@ -19,6 +32,12 @@ const localStrategyLogin = new LocalStrategy(localOptions, (req, username, passw
 
             done(null, user);
         });
+});
+
+const facebookStrategy = new FacebookStrategy(facebookOptions, (req, accessToken, refreshToken, profile, done) => {
+    let data = profile._json;
+    socialService.registerSocial(data, profile.provider, accessToken, done);
+    debug('Facebook data :', data);
 });
 
 const configPassport = passport => {
@@ -44,6 +63,7 @@ const configPassport = passport => {
     });
 
     passport.use('local-login', localStrategyLogin);
+    passport.use('facebook-login', facebookStrategy);
 };
 
 module.exports = configPassport;

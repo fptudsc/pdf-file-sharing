@@ -35,7 +35,10 @@ app.use(express.static('public'));
 app.use(session({
     secret: process.env.SESSION_SECRET,
     resave: false,
-    saveUninitialized: false
+    saveUninitialized: false,
+    cookie: {
+        expires: 120000
+    }
 }));
 app.use('/node_modules', express.static(path.join(__dirname, '/node_modules')));
 
