@@ -9,7 +9,6 @@ const express = require('express'),
     bodyParser = require('body-parser'),
     path = require('path'),
     debug = require('debug')('SERVER'),
-    morgan = require('morgan'),
     passport = require('passport'),
     session = require('express-session'),
     flash = require('connect-flash'),
@@ -28,7 +27,6 @@ const userRoute = require('./routes/user.route'),
 const auth = require('./middlewares/auth.middleware'),
     requrestMiddleware = require('./middlewares/request.middleware');
 
-app.use(morgan('dev'));
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 app.use(express.static('public'));

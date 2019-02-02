@@ -7,6 +7,7 @@ block content
             .col.col-4-lg
             .col.col-4-lg
                 form.jumbotron(method='POST', enctype='multipart/form-data')
+                    input(type='hidden', value=csrfToken, name='_csrf')
                     .form-group
                         if errors.title
                             .alert.alert-danger.text-center #{errors.title}

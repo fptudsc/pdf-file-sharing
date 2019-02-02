@@ -17,7 +17,8 @@ function saveChanges(form, callback) {
         lastName: form.lastName.value,
         username: form.username.value,
         email: form.email.value,
-        password: form.password.value
+        password: form.password.value,
+        _csrf: form._csrf.value
     };
 
     sendPostRequest(url, profile, callback);

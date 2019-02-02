@@ -9,7 +9,10 @@ const viewProfile = async (req, res) => {
             username: user.username
         };
         
-        res.render('users/profile', { profile });
+        res.render('users/profile', {
+            profile,
+            csrfToken: req.csrfToken()
+        });
     })
 };
 
@@ -19,7 +22,10 @@ const viewOwnSources = (req, res) => {
 
 const changePassword = (req, res, next) => {
     const errors = req.flash('password-errors');
-    res.render('users/password', { errors });
+    res.render('users/password', {
+        errors,
+        csrfToken: req.csrfToken()
+    });
 }
 
 const postChangePassword = (req, res, next) => {

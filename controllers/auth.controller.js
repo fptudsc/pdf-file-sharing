@@ -36,7 +36,8 @@ const register = (req, res) => {
 
     res.render('users/createAccount', {
         user,
-        errors
+        errors,
+        csrfToken: req.csrfToken()
     });
 };
 

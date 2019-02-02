@@ -18,7 +18,8 @@ const upSource = (req, res, next) => {
     // push errors and source-input back to user
     res.render('sources/upSource', {
         errors,
-        source
+        source,
+        csrfToken: req.csrfToken()
     });
 };
 
@@ -46,6 +47,7 @@ const postUpSource = (req, res, next) => {
         .catch(err => next(err))
         .finally(function () {
             res.redirect('/users/viewOwnSources');        
+            delete req.files;
         });
 };
 
