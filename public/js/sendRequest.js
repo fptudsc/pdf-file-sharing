@@ -13,14 +13,13 @@ function sendRequest(url, data, method, callback) {
     // set authentication jsonwebtoken string
     xhttp.setRequestHeader('Authentication', token.value);
 
-    if (method === 'POST') {
-        xhttp.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
-        // send data with POST method
-        let encodedObj = encodeURIComponent(JSON.stringify(data));
-        xhttp.send(`encodedObj=${encodedObj}`);
-    } else {
-        xhttp.send();
-    }
+    if (method === 'GET')        
+        return xhttp.send();
+
+    xhttp.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
+    // send data with POST method
+    let queryStringObj = convertObjToQS(data);
+    xhttp.send(queryStringObj);
 }
 
 function fetchData(url, callback) {

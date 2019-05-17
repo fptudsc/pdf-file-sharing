@@ -10,8 +10,8 @@ const profileMiddleware = require('../middlewares/profile.middleware');
 
 router.post(
     '/saveProfile',
-    profileMiddleware.transformReqBody,
     csrfProtection,
+    profileMiddleware.transformReqBody,
     controller.saveProfile
 );
 

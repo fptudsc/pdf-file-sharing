@@ -1,13 +1,19 @@
 const User = require('mongoose').model('User');
 
 const transformReqBody = (req, res, next) => {
-    const user = JSON.parse(req.body.encodedObj);
+    const { 
+        firstName,
+        lastName,
+        username,
+        password,
+        email
+    } = req.body;
 
     if (
-        ! (user.firstName &&
-        user.lastName &&
-        user.username &&
-        user.email)
+        ! (firstName &&
+        lastName &&
+        username &&
+        email)
     ) {
         return res.send({
             message: 'Please fullfill the form',
@@ -18,14 +24,14 @@ const transformReqBody = (req, res, next) => {
     User.findById(req.user.id, (err, foundUser) => {
         if (err) return next(err);
 
-        if (foundUser.salt && foundUser.hash && !foundUser.validPassword(user.password)) {
+        if (foundUser.salt && foundUser.hash && !foundUser.validPassword(password)) {
             return res.send({
                 message: 'Password incorrect',
                 error: []
             });
         }
 
-        req.body = user;
+        req.body = { firstName, lastName, username, email };
         next();
     });
 }
