@@ -4,22 +4,19 @@
 This project is the fundamental role_based authentication, upload and view pdf file.
 
 # Table of contents
-- [SOURCES_SHARING](#sourcessharing)
-    - [Express_passport_mongodb_cloudinary](#expresspassportmongodbcloudinary)
-- [Table of contents](#table-of-contents)
-- [Preparation](#preparation)
-- [The MVC Model](#the-mvc-model)
-- [Salt Hash Password](#salt-hash-password)
-- [Authentication with Passport](#authentication-with-passport)
-- [Validation](#validation)
-- [Role-Based Authentication](#role-based-authentication)
-- [Upload File to Cloudinary](#upload-file-to-cloudinary)
-- [Handle Request, Errors](#handle-request-errors)
-- [Connecting to Mlab](#connecting-to-mlab)
-- [Logging](#logging)
-- [CSRF](#csrf)
-- [API](#api)
-- [Login with Facebook](#login-with-facebook)
+ - [Preparation](#preparation)
+ - [The MVC Model](#the-mvc-model)
+ - [Salt Hash Password](#salt-hash-password)
+ - [Authentication with Passport](#authentication-with-passport)
+ - [Validation](#validation)
+ - [Role-Based Authentication](#role-based-authentication)
+ - [Upload File to Cloudinary](#upload-file-to-cloudinary)
+ - [Handle Request, Errors](#handle-request-errors)
+ - [Connecting to Mlab](#connecting-to-mlab)
+ - [Logging](#logging)
+ - [CSRF](#csrf)
+ - [API](#api)
+ - [Login with Facebook](#login-with-facebook)
 
 #  Preparation
 There are a lot of dependencies right here, I'll go though each of them:
@@ -713,8 +710,7 @@ form(method='POST', enctype='multipart/form-data')
 	-  With `POST` method, send the proper header information along with the request :
 		- `application/x-www-form-urlencoded` : the body of the HTTP message sent to the server is essentially one giant query string -- name/value pairs are separated by the ampersand (&), and names are separated from values by the equals symbol (=).
 		- `multipart/form-data` :  the boundary separator must not be present in the file data.
-	- `POST` method, The `encodeURIComponent()` function encodes a URI component. The `xhttp.send()` in the below code will send with a query string. For example, data : `{foo: {bar: 'bar'}}` --> `encodedObj=%5Bobject%20Object%5D`
-	- [`axios`](https://www.npmjs.com/package/axios) or [`jquery`](http://api.jquery.com/jquery.ajax/) may be more convenient
+	- [`axios`](https://www.npmjs.com/package/axios) or **post** method in [`jquery`](http://api.jquery.com/jquery.ajax/) may be more convenient
 ```js
 function sendRequest(url, data, method, callback) {
     const xhttp  = new XMLHttpRequest();
@@ -727,14 +723,13 @@ function sendRequest(url, data, method, callback) {
     // 3rd argument (true) use async
     xhttp.open(method, url, true);
 
-    if (method === 'POST') {
-        xhttp.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
-        // send data with POST method
-        let encodedObj = encodeURIComponent(JSON.stringify(data));
-        xhttp.send(`encodedObj=${encodedObj}`);
-    } else {
-        xhttp.send();
-    }
+    if (method === 'GET')        
+        return xhttp.send();
+
+    xhttp.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
+    // send data with POST method
+    let queryStringObj = convertObjToQS(data);
+    xhttp.send(queryStringObj);
 }
 ```
 
@@ -853,6 +848,7 @@ function saveChanges(form, callback) {
 ```js
 router.post(
     '/saveProfile',
+    csrfProtection,
     profileMiddleware.transformReqBody,
     controller.saveProfile
 );
@@ -866,13 +862,19 @@ router.post(
 
 ```js
 const transformReqBody = (req, res, next) => {
-    const user = JSON.parse(req.body.encodedObj);
+    const { 
+        firstName,
+        lastName,
+        username,
+        password,
+        email
+    } = req.body;
 
-     if (
-        ! (user.firstName &&
-        user.lastName &&
-        user.username &&
-        user.email)
+    if (
+        ! (firstName &&
+        lastName &&
+        username &&
+        email)
     ) {
         return res.send({
             message: 'Please fullfill the form',
@@ -880,17 +882,17 @@ const transformReqBody = (req, res, next) => {
         });
     }
 
-     User.findById(req.user.id, (err, foundUser) => {
+    User.findById(req.user.id, (err, foundUser) => {
         if (err) return next(err);
 
-         if (foundUser.salt && foundUser.hash && !foundUser.validPassword(user.password)) {
+        if (foundUser.salt && foundUser.hash && !foundUser.validPassword(password)) {
             return res.send({
                 message: 'Password incorrect',
                 error: []
             });
         }
 
-        req.body = user;
+        req.body = { firstName, lastName, username, email };
         next();
     });
 }
