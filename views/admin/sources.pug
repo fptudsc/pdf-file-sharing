@@ -1,0 +1,31 @@
+extends ../layouts/navbar
+
+block content
+    h1.jumbotron.text-center Admin SOURCES
+    
+    div.m-4
+        table.table
+            thead.thead-dark
+                tr
+                    th(scope='col') #
+                    th(scope='col') ID
+                    th(scope='col') TITLE
+                    th(scope='col') FILENAME
+                    th(scope='col') DESCRIPTION
+                    th(scope='col') AUTHOR
+                    th(scope='col') ACTION
+                    
+            tbody
+                if sources && sources.length > 0
+                    each source, i in sources
+                        tr
+                            th(scope='row') i
+                            td= source.id
+                            td= source.title
+                            td= source.file_name
+                            td= source.description
+                            td= source.author.username
+                            td
+                                a.btn.btn-info(href="/admin/sources/#{source.id}") VIEW
+                                a.btn.btn-danger.ml-4(href="/admin/sources/#{source.id}") DELETE
+                    

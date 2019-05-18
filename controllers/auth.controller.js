@@ -2,6 +2,9 @@ const User = require('mongoose').model('User');
 const passport = require('passport');
 
 const indexLogin = (req, res, next) => {
+    if (req.user)
+        return res.redirect('/');
+
     res.render('auth/login');
 };
 

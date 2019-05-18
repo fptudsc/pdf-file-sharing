@@ -22,7 +22,8 @@ require('./models/source.model');
 
 const userRoute = require('./routes/user.route'),
     authRoute = require('./routes/auth.route'),
-    sourceRoute = require('./routes/source.route');
+    sourceRoute = require('./routes/source.route'),
+    adminRoute = require('./routes/admin.route');
 
 const auth = require('./middlewares/auth.middleware'),
     requrestMiddleware = require('./middlewares/request.middleware');
@@ -65,7 +66,11 @@ app.use('/api', auth.requireAuth, require('./api'));
 app.use('/users', auth.requireAuth, userRoute);
 app.use('/auth', authRoute);
 app.use('/sources', sourceRoute);
-
+app.use('/admin', 
+    auth.requireAuth,
+    auth.requireRole([ 'admin' ]),
+    adminRoute
+);
 // Since not found any middleware
 app.use(requrestMiddleware.notFoundMiddleware);
 

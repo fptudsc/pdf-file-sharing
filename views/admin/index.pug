@@ -1,0 +1,9 @@
+extends ../layouts/navbar
+
+block content
+    h1.jumbotron.text-center Admin
+    .row
+        .col-lg-4
+        .col-lg-4
+            a.btn.btn-success(href="/admin/users") Users
+            a.btn.btn-warning(href="/admin/sources") Sources

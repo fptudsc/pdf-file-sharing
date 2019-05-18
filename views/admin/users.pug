@@ -1,0 +1,29 @@
+extends ../layouts/navbar
+
+block content
+    h1.jumbotron.text-center Admin USERS
+
+    div.m-4
+        table.table
+            thead.thead-dark
+                tr
+                    th(scope='col') #
+                    th(scope='col') USERNAME
+                    th(scope='col') FIRSTNAME
+                    th(scope='col') LASTNAME
+                    th(scope='col') EMAIL
+                    th(scope='col') ACTION
+                    
+            tbody
+                if users && users.length > 0
+                    each user, i in users
+                        tr
+                            th(scope='row') i
+                            td= user.username
+                            td= user.firstName
+                            td= user.lastName
+                            td= user.email
+                            td
+                                a.btn.btn-info(href="/admin/users/#{user.id}") VIEW
+                                a.btn.btn-danger.ml-4(href="/admin/users/#{user.id}") DELETE
+                    
