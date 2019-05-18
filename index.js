@@ -67,8 +67,8 @@ app.use('/users', auth.requireAuth, userRoute);
 app.use('/auth', authRoute);
 app.use('/sources', sourceRoute);
 app.use('/admin', 
-    auth.requireAuth,
-    auth.requireRole([ 'admin' ]),
+    // auth.requireAuth,
+    // auth.requireRole([ 'admin' ]),
     adminRoute
 );
 // Since not found any middleware

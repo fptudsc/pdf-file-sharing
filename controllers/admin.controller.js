@@ -15,6 +15,14 @@ const getAllUsers = (req, res) => {
         });
 };
 
+const getUser = (req, res) => {
+    User.findById(req.params.id, (err, user) => {
+        if (err) return next(err);
+
+        res.render('admin/user-detail', { user });
+    })
+}
+
 const getAllSources = (req, res) => {
     Source.find({})
         .populate({ path: 'author', select: 'username' })
@@ -25,8 +33,18 @@ const getAllSources = (req, res) => {
         });
 };
 
+const getSource = (req, res) => {
+    Source.find(req.params.id, (err, source) => {
+        if (err) return next(err);
+
+        res.render('admin/source-detail');
+    });
+}
+
 module.exports = {
     index,
     getAllUsers,
-    getAllSources
+    getUser,
+    getAllSources,
+    getSource
 }

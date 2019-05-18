@@ -24,6 +24,6 @@ block content
                             td= user.lastName
                             td= user.email
                             td
-                                a.btn.btn-info(href="/admin/users/#{user.id}") VIEW
-                                a.btn.btn-danger.ml-4(href="/admin/users/#{user.id}") DELETE
+                                a.btn.btn-info(href=`/admin/users/${user.id}`) VIEW
+                                a.btn.btn-danger.ml-4(href=`/admin/users/${user.id}`) DELETE
                     

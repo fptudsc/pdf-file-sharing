@@ -2,42 +2,5 @@ extends ../layouts/navbar
 
 block content
     h1.jumbotron.text-center.display-2.p-5 NEW ACCOUNT
-    .container
-        .row
-            .col.col-4-lg
-            .col.col-4-lg
-                form.jumbotron(method='POST')
-                    input(type='hidden', value=csrfToken, name='_csrf')
-                    .form-group
-                        if errors.firstName
-                            .alert.alert-danger.text-center #{errors.firstName}
-                        label(for='firstName') First Name
-                        input#firstName.form-control(type='text', name='firstName', placeholder='Enter First Name', value=user.firstName || '')
-                    .form-group
-                        if errors.lastName
-                            .alert.alert-danger.text-center #{errors.lastName}
-                        label(for='lastName') Last Name
-                        input#lastName.form-control(type='text', name='lastName', placeholder='Enter Last Name', value=user.lastName || '')
-                    .form-group
-                        if errors.username
-                            .alert.alert-danger.text-center #{errors.username}
-                        label(for='username') Username
-                        input#username.form-control(type='text', name='username', placeholder='Enter username', value=user.username || '')
-                    .form-group
-                        if errors.password
-                            .alert.alert-danger.text-center #{errors.password}
-                        label(for='password') Password
-                        input#password.form-control(type='password', name='password', placeholder='Enter password', value=user.password || '')
-                    .form-group
-                        if errors.passwordPair
-                            .alert.alert-danger.text-center #{errors.passwordPair}
-                        label(for='passwordPair') Password
-                        input#passwordPair.form-control(type='password', name='passwordPair', placeholder='Enter password', value=user.passwordPair || '')
-                    .form-group
-                        if errors.email
-                            .alert.alert-danger.text-center #{errors.email}
-                        label(for='email') Email
-                        input#email.form-control(type='text', name='email', placeholder='Enter email', value=user.email || '')
-                    .form-group.text-center
-                        button.btn.btn-primary.mb-2(type='submit') Register
-            .col.col-4-lg
+
+    include _form.pug
