@@ -8,10 +8,14 @@ const wirePreRequest = (req, res, next) => {
     }else{
         // Expose cloudinary package to view
         res.locals.cloudinary = cloudinary;
-        if (req.user){
+        const user = req.user;
+
+        if (user){
+            // Expose userLogin object to view
             res.locals.userLogin = {
-                firstName: req.user.firstName,
-                lastName: req.user.lastName
+                firstName: user.firstName,
+                lastName: user.lastName,
+                roles: user.roles
             };
         }
         next();
@@ -34,7 +38,8 @@ const notFoundMiddleware = (req, res, next) => {
     debug('ERROR :{} 404');
     res.status(404).render('errors/404', {
         err: 'Not found',
-        url: req.url
+        url: req.url,
+        method: req.method
     });
 }
 

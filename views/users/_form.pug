@@ -2,7 +2,8 @@
     .row
         .col.col-4-lg
         .col.col-4-lg
-            form.jumbotron(method='POST')
+            form.jumbotron.form-edit-user(method='POST')
+                input(type='hidden', value=method, name="_method")
                 if csrfToken
                     input(type='hidden', value=csrfToken, name='_csrf')
                 .form-group
@@ -36,5 +37,8 @@
                     label(for='email') Email
                     input#email.form-control(type='text', name='email', placeholder='Enter email', value=user.email || '')
                 .form-group.text-center
-                    button.btn.btn-primary.mb-2(type='submit')= user.roles.includes('admin') ? 'Save' : 'Register'
+                    button.btn.btn-primary.mb-2(type='submit')= userLogin && userLogin.roles.includes('admin') ? 'Save' : 'Register'
+                    input.btn.btn-default.mb-2(type='button', onClick="history.go(-1);", value="Cancel")
         .col.col-4-lg
+    script(defer, type="text/javascript", src="/js/form-edit-user.js")
+        

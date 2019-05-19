@@ -19,8 +19,37 @@ const getUser = (req, res) => {
     User.findById(req.params.id, (err, user) => {
         if (err) return next(err);
 
-        res.render('admin/user-detail', { user });
+        res.render('admin/user-detail', { user, method: 'PUT' });
     })
+}
+
+const updateUser = (req, res) => {
+    const errors = req.flash('errors-validate')[0];
+
+    if (errors)
+        return res.send({ errors });
+
+    const { firstName, lastName, username, password, email }  = req.body;
+
+    User.findById(req.params.id, (err, user) => {
+        if (err) return next(err);
+
+        user.firstName = firstName;
+        user.lastName = lastName;
+        user.username = username;
+        user.emai = email;
+
+        user.setPassword(password);
+    
+        user.save(err => {
+            if (err) return next(err);
+    
+            res.redirect(
+                303,    // avoid PUT redirect to PUT
+                `/admin/users/${user.id}`
+            );
+        });
+    });
 }
 
 const getAllSources = (req, res) => {
@@ -45,6 +74,7 @@ module.exports = {
     index,
     getAllUsers,
     getUser,
+    updateUser,
     getAllSources,
     getSource
 }

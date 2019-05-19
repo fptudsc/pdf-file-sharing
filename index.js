@@ -42,7 +42,7 @@ app.use(session({
 app.use('/node_modules', express.static(path.join(__dirname, '/node_modules')));
 
 // connect to mlab cloud database
-require('./config/mongodb.config').connectToMlab();
+require('./config/mongodb.config').connectToLocalhost();
 // configure cloudinary to upload file
 require('./config/cloudinary.config')(cloudinary);
 require('./config/passport.config')(passport);

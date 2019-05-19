@@ -9,7 +9,11 @@ const validator = require('../validators/user.validate');
 
 router.get('/register', csrfProtection, controller.register);
 
-router.post('/register', csrfProtection, validator.validate, controller.postRegister);
+router.post('/register', 
+    csrfProtection, 
+    validator.validateAndRedirect, 
+    controller.postRegister
+);
 
 router.get('/login', controller.indexLogin);
 

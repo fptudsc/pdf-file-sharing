@@ -1,6 +1,6 @@
 const validator = require('validator');
 
-module.exports.validate = (req, res, next) => {
+const validate = (req, res) => {
     const user = req.body;
     const errors = {};
     if (validator.isEmpty(user.firstName))
@@ -21,9 +21,19 @@ module.exports.validate = (req, res, next) => {
     if (Object.keys(errors).length !== 0 && errors.constructor === Object) {
         req.flash('errors-validate', errors);
         req.flash('user-inputs', user);
-        res.redirect('/auth/register');
-        return;
     }
+}
+
+module.exports.validateWithoutRedirect = (req, res, next) => {
+    validate(req, res);
+    next();
+}
+
+module.exports.validateAndRedirect = (req, res, next) => {
+    validate(req, res);
+
+    if (req.flash('errors-validate'))
+        return res.redirect(req.originUrl);
 
     next();
 }
